@@ -14,7 +14,7 @@ AppDataSource.initialize().then(() => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
-      "origin, X-Requested-With, Content-Type, Accept, Authorization"
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     );
   
     if (req.method === "OPTIONS") {

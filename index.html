@@ -9,11 +9,22 @@
 </head>
 
 <body style="background-color: black; color: white;">
+  <br /><br />
+  <select name="host" id="host" title="host">
+    <option value="localhost" title="localhost">localhost</option>
+    <option value="heroku" title="heroku">heroku</option>
+  </select><br /><br />
+
+  <label for="jwt">JWT</label><br />
+  <input type="text" name="jwt" id="jwt" /><br /><br />
+
   <form
+    id="form1"
     action="http://localhost:3000/users"
     method="post"
     style="border: 1px solid white; padding: 10px;"
   >
+    <h3>CADASTRAR</h3>
     <label for="name">nome</label><br />
     <input type="text" name="name" id="name" /><br /><br />
 
@@ -26,9 +37,28 @@
     <button type="submit">enviar</button>
   </form>
 
-  <br /><br /><br />
+  <br />
+
+  <form
+    id="form2"
+    action="http://localhost:3000/login"
+    method="post"
+    style="border: 1px solid white; padding: 10px;"
+  >
+    <h3>LOGAR</h3>
+    <label for="email">email</label><br />
+    <input type="email" name="email" id="email" /><br /><br />
+
+    <label for="password">senha</label><br />
+    <input type="password" name="password" id="password" /><br /><br />
+
+    <button type="submit">enviar</button>
+  </form>
+
+  <br /><br />
 
   <div style="border: 1px solid white; padding: 10px;">
+    <h3>UPAR IMAGEM</h3>
     <label for="imgname">nome</label><br />
     <input type="text" name="imgname" id="imgname" /><br /><br />
 
@@ -43,12 +73,42 @@
 
   <img id="img" src="" alt="" />
 
+  <br />
+  <h3>GET IMAGEM BY ID</h3>
+  <input type="number" name="imgnumber" id="imgnumber" />
+  <br /><br /><br />
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-    let c;
+    let selectedHost = "http://localhost:3000";
+    let token = '';
+
     document.getElementById('enviar-imagem').addEventListener(
       'click', handleFileSelect, false
     );
+
+    document.getElementById('jwt').addEventListener('input', (e) => {
+      token = e.target.value;
+    });
+
+    document.getElementById('host').addEventListener('change', (e) => {
+      if (e.target.value === "heroku") {
+        selectedHost = "https://desafio-node-js-gethash.herokuapp.com";
+      } else {
+        selectedHost = "http://localhost:3000";
+      }
+
+      document.getElementById("form1").setAttribute(
+        "action", `${selectedHost}/users`
+      );
+      document.getElementById("form2").setAttribute(
+        "action", `${selectedHost}/login`
+      );
+    });
+
+    document.getElementById('imgnumber').addEventListener('change', (e) => {
+      getPicture(e.target.value);
+    });
 
     function handleFileSelect() {
       const reader = new FileReader();
@@ -58,8 +118,7 @@
 
     function handleFileLoad(event) {
       console.log(event.target.result);
-      c = event.target.result;
-      axios.post("http://localhost:3000/images", JSON.stringify({
+      axios.post(`${selectedHost}/images`, JSON.stringify({
         name: document.getElementById('imgname').value,
         description: document.getElementById('description').value,
         picture: event.target.result,
@@ -67,7 +126,7 @@
       }), {
         headers: {
           "Content-Type": "image/*",
-          "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWFhQGdtYWlsLmNvbSIsImlhdCI6MTY2NjU5MzIxNSwiZXhwIjoxNjY2NTk1OTE1fQ.1ClPRrA7sypJQPs41heklm9veFzfTh9k8NMuhMMjQLU"
+          "Authorization": token
         },
       }).catch((err) => {
         console.error(err);
@@ -77,14 +136,14 @@
     function getPicture(id) {
       axios({
         method: "get",
-        url: `http://localhost:3000/images/${id}`
+        url: `${selectedHost}/images/${id}`
       })
-        .then(res => {
-          document.getElementById("img").setAttribute("src",`${res.data.picture}`);
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      .then(res => {
+        document.getElementById("img").setAttribute("src", `${res.data.picture}`);
+      })
+      .catch(err => {
+        console.error(err);
+      });
     }
   </script>
 </body>
