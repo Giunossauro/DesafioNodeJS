@@ -12,5 +12,3 @@ npm run build
 npm run migration:run
 npm run dev:server
 ```
-### .env recomendado
-
