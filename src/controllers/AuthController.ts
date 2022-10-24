@@ -15,8 +15,8 @@ export class AuthController {
     try {
       const user: User | null = (await userRepository.query(`
         SELECT email, password FROM users
-        WHERE email = '${email}' AND password = crypt('${password}', password);
-      `))[0];
+        WHERE '${email}' = email AND password = crypt('${password}', password);
+      `));
 
       if (user) {
         res.status(200).json({
