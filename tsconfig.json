@@ -12,21 +12,13 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": "./dist",
+    "outDir": "dist",
+    "rootDir": "src",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
     "strictPropertyInitialization": false
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
-  "ts-node": {
-    "files": true
   }
 }

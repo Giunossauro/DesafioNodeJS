@@ -1,1 +1,1 @@
-web: typeorm migrate:latest --verbose && node src/index.js
+web: npm start
