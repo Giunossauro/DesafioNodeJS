@@ -7,7 +7,7 @@ const typeorm_1 = require("typeorm");
 const port = process.env.DB_PORT;
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "postgres",
-    url: process.env.DATABASE_URL,
+    //url: process.env.DATABASE_URL,
     host: process.env.DB_HOST,
     port: port,
     username: process.env.DB_USERNAME,
@@ -15,10 +15,5 @@ exports.AppDataSource = new typeorm_1.DataSource({
     database: process.env.DB_DATABASE,
     synchronize: false,
     entities: [`${__dirname}/**/entities/*.{ts,js}`],
-    migrations: [`${__dirname}/**/migrations/*.{ts,js}`],
-    extra: {
-        ssl: {
-            rejectUnauthorized: false
-        }
-    },
+    migrations: [`${__dirname}/**/migrations/*.{ts,js}`]
 });
