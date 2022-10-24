@@ -1,7 +1,3 @@
-# Awesome Project Build with TypeORM
+# DesafioNodeJS
 
-Steps to run this project:
-
-1. Run `npm i` command
-2. Setup database settings inside `data-source.ts` file
-3. Run `npm start` command
+Backend para o CRUD de imagens com Express, TypeScript, TypeORM, Postgres e JWT
