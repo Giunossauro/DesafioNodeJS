@@ -12,5 +12,4 @@ export class default1666599778306 implements MigrationInterface {
     await queryRunner.query(`DROP TABLE "users"`);
     await queryRunner.query(`DROP TABLE "images"`);
   }
-
 }
